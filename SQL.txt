@@ -1,0 +1,31 @@
+1.
+
+SELECT
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
+    CONCAT(a.address, ', ', a.postal_code, ', ', ci.city, ', ', co.country) AS complete_address
+FROM
+    rental r
+    JOIN customer c ON r.customer_id = c.customer_id
+    JOIN address a ON c.address_id = a.address_id
+    JOIN city ci ON a.city_id = ci.city_id
+    JOIN country co ON ci.country_id = co.country_id
+WHERE
+    YEAR(r.rental_date) = 2006
+ORDER BY
+    c.last_name, c.first_name;
+
+-- Mám tam 2006, jelikož data jsou příliš stará
+
+2.
+
+SELECT
+    c.name AS category,
+    COUNT(f.film_id) AS film_count
+FROM
+    category c
+    LEFT JOIN film_category fc ON c.category_id = fc.category_id
+    LEFT JOIN film f ON fc.film_id = f.film_id
+GROUP BY
+    c.category_id, c.name
+ORDER BY
+    c.name;
